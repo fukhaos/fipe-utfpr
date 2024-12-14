@@ -5,6 +5,7 @@ import { Text, View } from "react-native";
 import useSWR from 'swr'
 import { router, useLocalSearchParams } from 'expo-router';
 import styles from "@/styles";
+import SuperButton from "@/components/SuperButton";
 
 export default function Veiculo() {
   const { codigoMarca, codigoModelo, codigoAno } = useLocalSearchParams();
@@ -24,6 +25,10 @@ export default function Veiculo() {
     )
   }
 
+  const goBack = () => {
+    router.dismissAll()
+  }
+
   return (
     <View style={styles.container}>
       {detailItem(`Veiculo: ${veiculo?.Modelo}`)}
@@ -31,6 +36,7 @@ export default function Veiculo() {
       {detailItem(`Valor: ${veiculo?.Valor}`)}
       {detailItem(`Ano do modelo: ${veiculo?.AnoModelo}`)}
       {detailItem(`Combustivel: ${veiculo?.Combustivel}`)}
+      <SuperButton title="Voltar Home" onPress={goBack} />
     </View>
   );
 }

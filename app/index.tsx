@@ -15,10 +15,8 @@ export default function Index() {
   }
 
   const handlePress = (item: FipeItem) => {
-    const { codigo, nome } = item;
-    router.push({ pathname: '/modelos', params: { codigoMarca: codigo } })
+    router.push({ pathname: '/modelos', params: { codigoMarca: item.codigo } })
   }
-
 
   return (
     <FipeScreen data={data} handlePress={handlePress} isLoading={isLoading} update={mutate} />

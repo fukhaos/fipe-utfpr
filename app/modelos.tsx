@@ -21,6 +21,6 @@ export default function Modelos() {
   }
 
   return (
-    <FipeScreen data={data?.modelos} handlePress={handlePress} />
+    <FipeScreen data={data?.modelos} handlePress={handlePress} isLoading={isLoading} />
   );
 }

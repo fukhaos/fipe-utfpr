@@ -21,6 +21,6 @@ export default function Anos() {
   }
 
   return (
-    <FipeScreen data={data} handlePress={handlePress} />
+    <FipeScreen data={data} handlePress={handlePress} isLoading={isLoading} />
   );
 }
