@@ -1,31 +1,36 @@
 import { Colors } from '@/constants/Colors';
 import styles from '@/styles';
-import { View, Text, TextInput } from 'react-native'
+import { View, Text, TextInput, TouchableOpacity } from 'react-native'
 import { FlashList } from '@shopify/flash-list'
 import { useEffect, useState } from 'react';
-import { Marca } from '@/models';
+import { FipeItem } from '@/models';
 
 interface FipeScreenProps {
-    data: Array<Marca>
+    data?: Array<FipeItem>,
+    handlePress: (item: FipeItem) => void
+}
+
+interface renderItemProps {
+    item: FipeItem
 }
 
 const FipeScreen = (props: FipeScreenProps) => {
-    const { data } = props;
+    const { data, handlePress } = props;
 
     const [searchTerm, setSearchTerm] = useState<string>("");
-    const [filteredData, setFilteredData] = useState<Array<Marca>>(data)
+    const [filteredData, setFilteredData] = useState<Array<FipeItem>>([])
 
     useEffect(() => {
-        if (!data || !searchTerm) return;
+        if (!data) return;
         const result = data.filter(item => item.nome.toLocaleLowerCase().includes(searchTerm.toLocaleLowerCase()))
         setFilteredData(result)
-    }, [searchTerm])
+    }, [data, searchTerm])
 
-    const renderItem = (props) => {
+    const renderItem = (props: renderItemProps) => {
         return (
-            <View style={styles.item}>
+            <TouchableOpacity style={styles.item} onPress={() => handlePress(props.item)}>
                 <Text>{props.item.nome}</Text>
-            </View>
+            </TouchableOpacity>
         )
     }
 
