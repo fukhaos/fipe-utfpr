@@ -1,13 +1,16 @@
 import { Colors } from '@/constants/Colors';
 import styles from '@/styles';
-import { View, Text, TextInput, TouchableOpacity } from 'react-native'
+import { View, Text, TextInput, TouchableOpacity, StatusBar, SafeAreaView, RefreshControl } from 'react-native'
 import { FlashList } from '@shopify/flash-list'
 import { useEffect, useState } from 'react';
 import { FipeItem } from '@/models';
+import Ionicons from '@expo/vector-icons/Ionicons'
 
 interface FipeScreenProps {
     data?: Array<FipeItem>,
-    handlePress: (item: FipeItem) => void
+    handlePress: (item: FipeItem) => void,
+    isLoading: boolean,
+    update?: () => void
 }
 
 interface renderItemProps {
@@ -15,7 +18,7 @@ interface renderItemProps {
 }
 
 const FipeScreen = (props: FipeScreenProps) => {
-    const { data, handlePress } = props;
+    const { data, handlePress, isLoading, update } = props;
 
     const [searchTerm, setSearchTerm] = useState<string>("");
     const [filteredData, setFilteredData] = useState<Array<FipeItem>>([])
@@ -30,12 +33,14 @@ const FipeScreen = (props: FipeScreenProps) => {
         return (
             <TouchableOpacity style={styles.item} onPress={() => handlePress(props.item)}>
                 <Text>{props.item.nome}</Text>
+                <Ionicons name='chevron-forward' size={18}></Ionicons>
             </TouchableOpacity>
         )
     }
 
     return (
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
+            <StatusBar barStyle={'dark-content'} ></StatusBar>
             <TextInput
                 placeholderTextColor={Colors.text}
                 style={styles.input}
@@ -45,9 +50,11 @@ const FipeScreen = (props: FipeScreenProps) => {
             />
 
             <FlashList
+                estimatedItemSize={60}
                 data={filteredData}
-                renderItem={renderItem} />
-        </View>
+                renderItem={renderItem}
+                refreshControl={<RefreshControl refreshing={isLoading} onRefresh={update} />} />
+        </SafeAreaView>
     );
 }
 

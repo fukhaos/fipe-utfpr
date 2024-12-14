@@ -12,4 +12,14 @@ export interface ListaModelos {
     anos: Ano[],
 }
 
-
+export interface DetalheVeiculo {
+    TipoVeiculo: number,
+    Valor: string,
+    Marca: string,
+    Modelo: string,
+    AnoModelo: string,
+    Combustivel: string,
+    CodigoFipe: string,
+    MesReferencia: string,
+    SiglaCombustivel: string,
+}

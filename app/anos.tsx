@@ -7,7 +7,9 @@ import { router, useLocalSearchParams } from 'expo-router';
 
 export default function Anos() {
   const { codigoMarca, codigoModelo } = useLocalSearchParams();
-  const { data, error, isLoading } = useSWR<Ano[]>(`/carros/marcas/${codigoMarca}/modelos/${codigoModelo}/anos`, fetcher)
+  const { data, error, isLoading } = useSWR<Ano[]>(`/carros/marcas/${codigoMarca}/modelos/${codigoModelo}/anos`, fetcher, {
+    dedupingInterval: 60_000
+  })
 
   if (error) {
     return (<Text>{error.message}</Text>)
@@ -15,7 +17,7 @@ export default function Anos() {
 
   const handlePress = (item: FipeItem) => {
     const { codigo } = item;
-    router.push({ pathname: '/anos', params: { codigoMarca: codigoMarca, codigoModelo: codigo } })
+    router.push({ pathname: '/veiculo', params: { codigoMarca, codigoModelo, codigoAno: codigo } })
   }
 
   return (

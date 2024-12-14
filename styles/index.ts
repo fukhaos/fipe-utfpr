@@ -15,14 +15,20 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.card
     },
     item: {
+        flexDirection: 'row',
         height: 60,
         borderBottomWidth: 1,
         padding: 16,
-        justifyContent: 'center',
+        alignItems: 'center',
+        justifyContent: 'space-between',
         backgroundColor: Colors.card,
         borderColor: Colors.border,
-
+    },
+    textDetail: {
+        fontWeight: 'bold',
+        color: Colors.text
     }
+
 })
 
 export default styles;

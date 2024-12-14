@@ -7,7 +7,9 @@ import { router, useLocalSearchParams } from 'expo-router';
 
 export default function Modelos() {
   const { codigoMarca } = useLocalSearchParams();
-  const { data, error, isLoading } = useSWR<ListaModelos>(`/carros/marcas/${codigoMarca}/modelos`, fetcher)
+  const { data, error, isLoading } = useSWR<ListaModelos>(`/carros/marcas/${codigoMarca}/modelos`, fetcher, {
+    dedupingInterval: 60_000
+  })
 
   if (error) {
     return (<Text>{error.message}</Text>)

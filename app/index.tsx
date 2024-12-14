@@ -6,7 +6,9 @@ import useSWR from 'swr'
 import { router } from 'expo-router';
 
 export default function Index() {
-  const { data, error, isLoading } = useSWR<Marca[]>('/carros/marcas', fetcher)
+  const { data, error, isLoading, mutate } = useSWR<Marca[]>('/carros/marcas', fetcher, {
+    dedupingInterval: 60_000
+  })
 
   if (error) {
     return (<Text>{error.message}</Text>)
@@ -19,6 +21,6 @@ export default function Index() {
 
 
   return (
-    <FipeScreen data={data} handlePress={handlePress} />
+    <FipeScreen data={data} handlePress={handlePress} isLoading={isLoading} update={mutate} />
   );
 }
